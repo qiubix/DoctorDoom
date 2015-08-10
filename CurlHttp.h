@@ -8,18 +8,18 @@
 
 class CurlHttp: public Http {
 public:
-   CurlHttp();
-   virtual ~CurlHttp();
+  CurlHttp();
+  virtual ~CurlHttp();
 
-   void initialize();
-   virtual std::string get(const std::string& url) const;
-   static std::string Response();
-   static size_t writeCallback(const char* buf, size_t size, size_t nMemb, void*);
+  void initialize();
+  virtual std::string get(const std::string& url) const;
+  static std::string Response();
+  static size_t writeCallback(const char* buf, size_t size, size_t nMemb, void*);
 
 private:
-   CURL* curl;
+  CURL* curl;
 
-   static std::string response_;
+  static std::string response_;
 };
 
 #endif //CURL_HTTP_H
