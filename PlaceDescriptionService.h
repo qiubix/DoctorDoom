@@ -13,6 +13,7 @@ public:
 
 private:
    std::string createGetRequestUrl(const std::string& latitude, const std::string& longitude) const;
+   std::string keyValue(const std::string& key, const std::string& value) const;
    std::string get(const std::string& request) const;
    std::string summaryDescription(const std::string& response) const;
 

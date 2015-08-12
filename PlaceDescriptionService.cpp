@@ -17,15 +17,22 @@ string PlaceDescriptionService::summaryDescription(const string& latitude, const
 string PlaceDescriptionService::summaryDescription(const string& response) const {
   AddressExtractor extractor;
   auto address = extractor.addressFrom(response);
-
   return address.summaryDescription();
 }
 
 string PlaceDescriptionService::createGetRequestUrl(const string& latitude, const string& longitude) const {
-  string urlStart{"http://open.mapquestapi.com/nominatim/v1/reverse?format=json&"};
-  return urlStart + "lat=" + latitude + "&lon=" + longitude;
+  string server{"http://open.mapquestapi.com/"};
+  string document{"nominatim/v1/reverse"};
+  return server + document + "?" +
+    keyValue("format", "json") + "&" +
+    keyValue("lat", latitude) + "&" +
+    keyValue("lon", longitude);
 }
 
-string PlaceDescriptionService::get(const string& request) const {
-  return http_->get(request);
+string PlaceDescriptionService::keyValue(const string& key, const string& value) const {
+  return key + "=" + value;
+}
+
+string PlaceDescriptionService::get(const string& requestUrl) const {
+  return http_->get(requestUrl);
 }
