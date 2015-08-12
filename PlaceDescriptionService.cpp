@@ -16,5 +16,5 @@ string PlaceDescriptionService::summaryDescription(const string& latitude, const
   AddressExtractor extractor;
   auto address = extractor.addressFrom(jsonResponse);
 
-  return address.road + ", " + address.city + ", " + address.state + ", " + address.country;
+  return address.summaryDescription();
 }
