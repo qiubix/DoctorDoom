@@ -17,7 +17,18 @@ const string APlaceDescriptionService::ValidLongitude("-104.44");
 
 class HttpStub: public Http {
 public:
+  MOCK_METHOD0(initialize, void());
+  MOCK_CONST_METHOD1(get, string(const string&));
 };
 
 TEST_F(APlaceDescriptionService, MakesHttpRequestToObtainAddress) {
+  HttpStub httpStub;
+  string urlStart{"http://open.mapquestapi.com/nominatim/v1/reverse?format=json&"};
+  auto expectedUrl = urlStart +
+    "lat=" + APlaceDescriptionService::ValidLatitude + "&" +
+    "lon=" + APlaceDescriptionService::ValidLongitude;
+  EXPECT_CALL(httpStub, get(expectedUrl));
+  PlaceDescriptionService service{&httpStub};
+
+  service.summaryDescription(ValidLatitude, ValidLongitude);
 }
