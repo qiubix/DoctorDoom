@@ -32,3 +32,17 @@ TEST_F(APlaceDescriptionService, MakesHttpRequestToObtainAddress) {
 
   service.summaryDescription(ValidLatitude, ValidLongitude);
 }
+
+TEST_F(APlaceDescriptionService, FormatsRetrievedAddressIntoSummaryDescription) {
+  HttpStub httpStub;
+  EXPECT_CALL(httpStub, get(_))
+    .WillOnce(Return(
+          R"({ "address": {
+            "road":"Drury Ln",
+            "city":"Fountain",
+            "state":"CO",
+            "country":"US" }})"));
+  PlaceDescriptionService service{&httpStub};
+  auto description = service.summaryDescription(ValidLatitude, ValidLongitude);
+  ASSERT_THAT(description, Eq("Drury Ln, Fountain, CO, US"));
+}
