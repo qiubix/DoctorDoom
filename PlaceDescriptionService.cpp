@@ -15,8 +15,11 @@ string PlaceDescriptionService::summaryDescription(const string& latitude, const
     keyValue("format", "json") + "&" +
     keyValue("lat", latitude) + "&" +
     keyValue("lon", longitude);
-  http_->get(url);
-  return "";
+  auto response = http_->get(url);
+
+  AddressExtractor extractor;
+  auto address = extractor.addressFrom(response);
+  return address.summaryDescription();
 }
 
 string PlaceDescriptionService::keyValue(const string& key, const string& value) const {
