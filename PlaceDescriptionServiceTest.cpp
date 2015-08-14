@@ -35,7 +35,7 @@ TEST_F(APlaceDescriptionService, MakesHttpRequestToObtainAddress) {
 }
 
 TEST_F(APlaceDescriptionService, FormatsRetrievedAddressIntoSummaryDescription) {
-  HttpStub httpStub;
+  NiceMock<HttpStub> httpStub;
   EXPECT_CALL(httpStub, get(_))
     .WillOnce(Return(
           R"({ "address": {
